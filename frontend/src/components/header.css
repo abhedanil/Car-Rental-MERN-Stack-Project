@@ -1,0 +1,27 @@
+.headerr{
+    display:flex;
+    align-items: center;
+    justify-content: between;
+    width:100%;
+    background-color: rgb(236, 239, 245);
+    
+}
+ul{
+    display:flex;
+
+    list-style-type: none;
+}
+li {
+
+    color: azure;
+}
+ul Link{
+   
+}
+FaSignInAlt{
+    color:aqua
+}
+.logo{ 
+    color:black;
+    text-decoration:'';
+}
