@@ -5,8 +5,12 @@ import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { login, reset } from '../features/Auth/authSlice'
+import { login, reset } from '../redux/features/Auth/authSlice'
 import Spinner from '../components/Spinner'
+import { Avatar, Grid, Paper, Typography , TextField, Button } from '@mui/material'
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { Box } from '@mui/system'
+
 import "../components/Login.css"
 function Login() {
 
@@ -27,23 +31,16 @@ function Login() {
             (state) => state.auth
         )
 
-
-    useEffect(() => {
-        if (isError) {
-            toast.error(message)
-        }
-        else if (user?.isAdmin) {
+        if (user?.isAdmin||user?.isHost) {
             navigate("/adminAndHost")
         }
-        else if (user?.isHost) {
-            navigate("/adminAndHost")
+        else if(user){
+            console.log("gh");
+            navigate("/")
         }
-        else if (isSuccess || user) {
-            navigate('/')
-        }
-        dispatch(reset())
-
-    }, [user, isError, isSuccess, message, navigate, dispatch])
+    
+    
+    
 
 
     const onChange = (e) => {
@@ -68,45 +65,33 @@ function Login() {
         return <Spinner />
     }
 
+
+    const paperStyle = { padding: '30px 20px', width: 300, margin: '150px auto', }
+    const headerStyle = { margin: "10px 0", }
+    const avatarStyle = { backgroundColor: '#1bbd72' }
+
     return (
         <>
-            <div className='outer'>
-               <div className='inner'>
-                     
-                <section className="heading">
-                    <h1>
-                        <FaSignInAlt />Login
-                    </h1>
-                    <p>Login</p>
-                </section>
-                <section className="form">
-                    <form onSubmit={onSubmit}>
+            <div >
+                <Grid >
+                    <Paper elevation={20} style={paperStyle}>
+                        <Grid align="center">
+                            <Avatar style={avatarStyle}>
+                                <LockOpenIcon />
+                            </Avatar>
+                            <h2 style={headerStyle} >Login</h2>
+                        </Grid>
+                        <form onSubmit={onSubmit}>
+                            <TextField label='Email' type="text" name="email" value={email} onChange={onChange} fullWidth sx={{ margin: "5px 0" }} />
+                            <TextField label='Password' fullWidth type="text" name="password" value={password} onChange={onChange} sx={{ margin: "5px 0" }} />
 
-                        <div className="form-group">
-                            <input
-                                type="email" className="form-control"
-                                id="email" name="email"
-                                value={email}
-                                placeholder="Enter your email"
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password" className="form-control"
-                                id="password" name="password"
-                                value={password}
-                                placeholder="Enter password"
-                                onChange={onChange}
-                            />
-                        </div>
 
-                        <div className="form-froup">
-                            <button type="submit" className=' btn btn-block'>Submit</button>
-                        </div>
-                    </form>
-                </section>
-                </div>  
+                            <Box align="center" sx={{ margin: "10px 0" }}>
+                                <Button type="submit" variant="contained" color="primary" align="center">Login</Button>
+                            </Box>
+                        </form>
+                    </Paper>
+                </Grid>
             </div>
         </>
     )

@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import ApplyNav from './ApplyNav'
 import {useSelector, useDispatch} from 'react-redux'
-import { applicationStatus ,reset} from '../../features/HostForm/formSlice'
 import { useNavigate } from 'react-router-dom'
 import Card from "@mui/material/Card";
 function ViewStatus() {

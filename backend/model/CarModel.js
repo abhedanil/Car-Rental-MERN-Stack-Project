@@ -22,8 +22,15 @@ const carSchema = mongoose.Schema({
     yom:{
         type:String
     },
-    image:{
+    carimage:{
         type:String
+    },
+    RCimage:{
+        type:String
+    },
+    status:{
+        type:String,
+        default:"pending"
     }
 }
 )

@@ -2,7 +2,7 @@ import React from 'react'
 import {FaRoad, FaSignInAlt,FaSignOutAlt,FaUser} from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import {logout,reset}  from '../../features/Auth/authSlice'
+import {logout,reset}  from '../../redux/features/Auth/authSlice'
 
 function ApplyNav() {
     const navigate= useNavigate()

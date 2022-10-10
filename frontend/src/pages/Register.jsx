@@ -4,9 +4,16 @@ import {FaUser} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {register,reset} from '../features/Auth/authSlice'
+import {register,reset} from '../redux/features/Auth/authSlice'
 import Spinner from '../components/Spinner'
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { Avatar, Grid, Paper, Typography, TextField, Button } from '@mui/material'
+import { Box } from '@mui/system'
+
 function Register() {
+    const paperStyle = { padding: '30px 20px', width: 500, margin: '70px auto', }
+    const headerStyle = { margin: "10px 0", }
+    const avatarStyle = { backgroundColor: '#1bbd72' }
 
     const [formData,setFormData] = useState({
         name:'',
@@ -67,59 +74,27 @@ function Register() {
   return (
     <>
     <div className='outer'>
-        <div>
+    <Grid >
+                <Paper elevation={20} style={paperStyle}>
+                    <Grid align="center">
+                        <Avatar style={avatarStyle}>
+                            <LockOpenIcon />
+                        </Avatar>
+                        <h2 style={headerStyle} >Signup</h2>
+                    </Grid>
+                    <form onSubmit={onSubmit}>
+                        <TextField label='Name' type="text"name="name" value={name} fullWidth sx={{ margin: "5px 0" }} onChange={onChange}/>
+                        <TextField label='Email' type="text" name="email" value={email} fullWidth sx={{ margin: "5px 0" }}onChange={onChange} />
+                       
+                        <TextField label='Password' type="text" name="password" fullWidth value={password} sx={{ margin: "5px 0" }} onChange={onChange} />
+                        <TextField label='Confirm password' type="text" name="password2" value={password2} fullWidth sx={{ margin: "5px 0" }} onChange={onChange} />            
+                        <Box align="center" sx={{ margin: "10px 0" }}>
+                            <Button type="submit" variant="contained" color="primary" align="center">Signup</Button>
+                        </Box>
 
-        <section className="heading">
-            <h1>
-                <FaUser/>Register
-            </h1>
-            <p>Please create an account</p>
-        </section>
-        <section className="form">
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                <input 
-                    type="text" className="form-control" 
-                    id="name" name="name"
-                    value={name}
-                    placeholder="Enter your name"
-                    onChange={onChange}
-                />
-                </div>
-                <div className="form-group">
-                <input 
-                    type="email" className="form-control" 
-                    id="email" name="email"
-                    value={email}
-                    placeholder="Enter your email"
-                    onChange={onChange}
-                />
-                </div>
-                <div className="form-group">
-                <input 
-                    type="password" className="form-control" 
-                    id="password" name="password"
-                    value={password}
-                    placeholder="Enter password"
-                    onChange={onChange}
-                />
-                </div>
-                <div className="form-group">
-                <input 
-                    type="password" className="form-control" 
-                    id="password2" name="password2"
-                    value={password2}
-                    placeholder="Confirm password"
-                    onChange={onChange}
-                />
-                </div>
-                <div className="form-froup">
-                    <button type="submit" className=' btn btn-block'>Submit</button>
-                </div>
-            </form>
-        </section>
-
-        </div>
+                    </form>
+                </Paper>
+            </Grid>
     </div>
         
     </>

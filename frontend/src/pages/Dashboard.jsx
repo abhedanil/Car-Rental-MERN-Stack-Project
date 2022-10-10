@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, Navigate } from "react-router-dom"
+import { logout, reset } from "../redux/features/Auth/authSlice"
 import { toast } from 'react-toastify'
-import Header from '../components/Header'
-import { applicationStatus } from '../features/HostForm/formSlice'
-import "../components/dashboard.css"
-import Banner from "../components/Banner"
-import { AppBar, Toolbar, Typography, Tab, Tabs, Button, useMediaQuery, useTheme } from "@mui/material"
+
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+
+import { CardActionArea } from '@mui/material';
+
+import { Grid, AppBar, Toolbar, Typography, Tab, Tabs, Button, useMediaQuery, useTheme } from "@mui/material"
 import CarRentalIcon from '@mui/icons-material/CarRental'
 import DrawerComp from "../components/DrawerComp"
 const PAGES = ["products", "services", "About", "Contact Us",]
@@ -19,6 +24,7 @@ const PAGES = ["products", "services", "About", "Contact Us",]
 function Dashboard() {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { user } =
     useSelector(
@@ -30,6 +36,22 @@ function Dashboard() {
   console.log(theme)
   const isMatch = useMediaQuery(theme.breakpoints.down('md'))
   console.log(isMatch)
+
+  const toLogin = () => {
+
+    navigate("/login")
+  }
+  const toSignup = () => {
+    navigate('/register')
+  }
+
+
+  const onLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate("/login")
+  }
+
   return (
     <>
       <React.Fragment>
@@ -51,14 +73,27 @@ function Dashboard() {
                 <Tabs textColor="inherit" value={value}
                   onChange={(e, value) => setValue(value)}
                   indicatorColor="secondary" >
-                    {
-                      PAGES.map((page,index)=>(
-                        <Tab key={index} label={page}/>
-                      ))
-                    }
+                  {
+                    PAGES.map((page, index) => (
+                      <Tab key={index} label={page} />
+                    ))
+                  }
                 </Tabs>
-                <Button sx={{ marginLeft: 'auto' }} variant="contained" >Login </Button>
-                <Button sx={{ marginLeft: '10px' }} variant="contained">Signup</Button>
+                {user ? (
+                  <>
+                    <Link to="/becomeHost"><Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >Become A Host</Button></Link>
+                    <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >{user.name}</Button>
+                    <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={onLogout}>Logout</Button>
+                  </>
+
+                ) : (
+                  <>
+                    <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} > Login</Button>
+                    <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={toSignup}>Signup</Button>
+                  </>
+                )}
+
+
 
               </>
             )}
@@ -66,7 +101,28 @@ function Dashboard() {
           </Toolbar>
 
         </AppBar>
-
+        
+        <Grid sx={{margin:"80px"}}>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              height="140"
+              image="/static/images/cards/contemplative-reptile.jpg"
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Lizard
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lizards are a widespread group of squamate reptiles, with over 6,000
+                species, ranging across all continents except Antarctica
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        </Grid>
       </React.Fragment>
     </>
   )

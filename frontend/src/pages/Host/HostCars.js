@@ -40,11 +40,13 @@ function HostCars() {
                         <TableRow>
                             <TableCell>Id</TableCell>
                             <TableCell>Car Image</TableCell>
-                            <TableCell>Car Name</TableCell>
+                            <TableCell>RC image</TableCell>
+                            <TableCell>Car name</TableCell>
                             <TableCell>Car Type</TableCell>
                             <TableCell>Seat Capacity</TableCell>
                             <TableCell>Fuel Type</TableCell>
                             <TableCell>Y.O.M</TableCell>
+                            <TableCell>status</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -54,12 +56,14 @@ function HostCars() {
 
                             <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell>{car._id}</TableCell>
-                                <TableCell ><img src={car.image} style={{width:"150px", height:"70px" }}/></TableCell>
+                                <TableCell ><img src={car.carimage} style={{width:"150px", height:"70px" }}/></TableCell>
+                                <TableCell ><img src={car.RCimage} style={{width:"150px", height:"70px" }}/></TableCell>
                                 <TableCell>{car.carname}</TableCell>
                                 <TableCell>{car.cartype}</TableCell>
                                 <TableCell>{car.seatCapacity}</TableCell>
                                 <TableCell>{car.fueltype}</TableCell>
                                 <TableCell>{car.yom}</TableCell>
+                                <TableCell>{car.status}</TableCell>
                             </TableRow>
 
                         ))}

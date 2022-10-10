@@ -14,7 +14,8 @@ import {
 
 function AddCar() {
 
-  const [image,setImage] = useState()
+  const [carimage,setCarImage] = useState()
+  const [RCimage,setRcImage ] = useState()
 
 
   const {user} = useSelector((state)=>state.auth)
@@ -28,8 +29,9 @@ function AddCar() {
   formdata.append("seatcapacity",e.target.seatcapacity.value);
   formdata.append("fueltype",e.target.fueltype.value)
   formdata.append("yom",e.target.yom.value)
-  formdata.append("image",image)
-  console.log(image)
+  formdata.append("carimage",carimage)
+  formdata.append("RCimage",RCimage)
+ 
   console.log(formdata)
   const response= await axios.post("/api/host/addNewCar",formdata,{
     headers:{
@@ -72,7 +74,12 @@ function AddCar() {
                 <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
                   <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                       <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
-                      <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='image' onChange={(e)=>setImage(e.target.files[0])}/>
+                      <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='carimage' onChange={(e)=>setCarImage(e.target.files[0])}/>
+                  </FormControl>
+                  <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
+                  <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                      <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
+                      <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='RCimage' onChange={(e)=>setRcImage(e.target.files[0])}/>
                   </FormControl>
               </CardContent>
               <Box align="center">

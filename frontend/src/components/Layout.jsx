@@ -2,7 +2,7 @@ import React,{ useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link,useLocation, useNavigate} from "react-router-dom"
 import './layout.css'
-import {logout,reset}  from '../features/Auth/authSlice'
+import {logout,reset}  from '../redux/features/Auth/authSlice'
 
 function Layout({children}) {
 
@@ -36,7 +36,7 @@ function Layout({children}) {
       },
       {
         name:'Car request',
-        path:'getCarRequests',
+        path:'/getCarRequests',
         icon:'ri-car-line'
       },
 

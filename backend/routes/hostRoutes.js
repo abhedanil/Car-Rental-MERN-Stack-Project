@@ -6,7 +6,10 @@ const {addNewCar,getMyCars} =require('../controllers/hostController')
 const upload=require("../utils/multer")
 
 
-router.post('/addNewCar',protect,upload.single('image'),addNewCar)
+router.post('/addNewCar',protect,upload.fields([
+    { name: "RCimage", maxCount: 1 },
+    { name: "carimage", maxCount: 1 },
+]),addNewCar)
 router.get('/myCars',protect,getMyCars)
 
 

@@ -15,7 +15,7 @@ import HostCars from './pages/Host/HostCars';
 import Layout from './components/Layout';
 import Secondheader from './components/Secondheader';
 
-
+import CarRequest from "./pages/Admin/CarRequest"
 function App() {
   return (
     <>
@@ -38,6 +38,7 @@ function App() {
               <Route exact path="/admin" element={<AdminHome/>}/>
               {/* <Route exact path="/viewAllApps" element={<Allapps/>}/> */}
                <Route path="/head" element={<Secondheader/>}/>
+               <Route path="/getCarRequests" element={<CarRequest/>}/>
           </Routes>
         </div>
       </Router>
