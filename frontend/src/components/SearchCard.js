@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Card, CardActionArea, CardContent, CardMedia, TextField } from '@mui/material';
 
@@ -45,12 +46,17 @@ function SearchCard() {
     const [endDate, setEndDate] = useState('Select end Date')
     console.log(districtName)
 
-
+    const navigate = useNavigate()
 
     const SubmitDistrict =(dis)=>{
                 setDistrictName(dis)
                 handleCloseLocationModal()
     }
+
+    const onSubmit=()=>{
+            navigate("/filterPage")
+    }
+
 
     return (
         <div>
@@ -113,7 +119,7 @@ function SearchCard() {
                                             </Box>
                                         </Modal>
                                         </Paper>
-                                    <Button variant="contained" color="success" sx={{ ml: 3, mt: .6, m: 1, width: "200px", height: "40px", borderRadius: "5px" }} id="outlined-name" label="Name" size="small">Find Cars</Button>
+                                    <Button variant="contained" color="success" sx={{ ml: 3, mt: .6, m: 1, width: "200px", height: "40px", borderRadius: "5px" }} id="outlined-name" label="Name" size="small" onClick={onSubmit} >Find Cars</Button>
 
                                 </Box>
                             </Grid>

@@ -28,10 +28,19 @@ const carSchema = mongoose.Schema({
     RCimage:{
         type:String
     },
-    status:{
-        type:String,
-        default:"pending"
-    }
+    location:{
+        type:String
+    },
+    district:{
+        type:String
+    },
+    startdate:{
+        type:Date
+    },
+    enddate:{
+        type:Date
+    },
+    
 }
 )
 module.exports= mongoose.model("car",carSchema)

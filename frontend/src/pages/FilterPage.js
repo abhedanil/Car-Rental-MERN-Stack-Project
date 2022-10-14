@@ -1,11 +1,13 @@
 import React from 'react'
-
+import NavBar from '../components/Navbar'
+import FilterLayout from '../components/FilterLayout'
 function FilterPage() {
-  return (
-    <div>
-      
-    </div>
-  )
+    return (
+        <div>
+            <NavBar />
+            <FilterLayout/>
+        </div>
+    )
 }
 
 export default FilterPage

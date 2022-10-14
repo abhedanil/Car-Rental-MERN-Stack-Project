@@ -16,6 +16,8 @@ import Layout from './components/Layout';
 import Secondheader from './components/Secondheader';
 
 import CarRequest from "./pages/Admin/CarRequest"
+import FilterPage from './pages/FilterPage';
+
 function App() {
   return (
     <>
@@ -39,6 +41,7 @@ function App() {
               {/* <Route exact path="/viewAllApps" element={<Allapps/>}/> */}
                <Route path="/head" element={<Secondheader/>}/>
                <Route path="/getCarRequests" element={<CarRequest/>}/>
+               <Route path="/filterPage" element={<FilterPage/>}/>
           </Routes>
         </div>
       </Router>

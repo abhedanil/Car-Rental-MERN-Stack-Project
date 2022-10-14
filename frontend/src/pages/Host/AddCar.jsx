@@ -71,12 +71,28 @@ function AddCar() {
                   <InputLabel htmlFor="outlined-adornment-amount">Year Of Manufacture</InputLabel>
                   <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='yom' />
                 </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Exact Location</InputLabel>
+                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='location' />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">District</InputLabel>
+                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='district' />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Start date</InputLabel>
+                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='startDate' />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">End date</InputLabel>
+                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='endDate' />
+                </FormControl>
                 <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
                   <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                       <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                       <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='carimage' onChange={(e)=>setCarImage(e.target.files[0])}/>
                   </FormControl>
-                  <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
+                  <Typography sx={{ mr: 50 }} align="center">Upload RC image</Typography>
                   <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                       <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                       <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='RCimage' onChange={(e)=>setRcImage(e.target.files[0])}/>
