@@ -4,7 +4,8 @@ import { Card, CardActionArea, CardContent, CardMedia, TextField } from '@mui/ma
 
 import { Box, Paper, Grid, AppBar, Toolbar, Typography, Tab, Tabs, Button, useMediaQuery, useTheme } from "@mui/material"
 import Modal from '@mui/material/Modal';
-
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -15,27 +16,41 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    display:"flex",
-    flexDirection:"row"
+    height:"400px",
+    overflow:"auto"
   };
 
 
 
 
 function SearchCard() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+    const district = ['Kasaragod', 'Kannur', 'Kozhikode','Wayanad','Malappuram' ,'Thrissur','Palakkad','Eranakulam','Alappuzha','Idukki','Kollam','Kottayam','Pathanamthitta','Trivandrum']
+    console.log(district.length,"11111111111111111")
+    
+    const [openStartmodal, setOpenStartModal] = React.useState(false);
+    const handleOpenstartModal = () => setOpenStartModal(true);
+    const handleCloseStartModal = () => setOpenStartModal(false);
+    
+    const [openEndModal, setOpenEndModal] = React.useState(false);
+    const handleOpenEndModal = () => setOpenEndModal(true);
+    const handleCloseEndModal = () => setOpenEndModal(false);
+    
+    const [openLocationModal, setOpenLocationModal]= useState(false)
+    const handleOpenLocationModal =() => setOpenLocationModal(true)
+    const handleCloseLocationModal = () => setOpenLocationModal(false)
+    
+    const [districtName,setDistrictName] = useState('Select District')
     const [startDate,setStartDate] = useState('Select Start date ')
     const [endDate, setEndDate] = useState('Select end Date')
+    console.log(districtName)
 
 
 
-
-    const ChangeStart=(e)=>{
-        console.log(e.target.name,"555555555555")
+    const SubmitDistrict =(dis)=>{
+                setDistrictName(dis)
+                handleCloseLocationModal()
     }
-
 
     return (
         <div>
@@ -49,35 +64,55 @@ function SearchCard() {
 
                             <Grid item sx={{ margin: "auto" }} >
                                 <Box sx={{ display: "flex", }}  >
-                                    <Paper sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }} id="outlined-name" label="Name" size="small"><Button  variant="text" sx={{ color: "black", ml: 1, mt: .6 }} size="small">select Pickup location</Button></Paper>
+                                    <Paper sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }} id="outlined-name" label="Name" size="small"><Button  onClick={handleOpenLocationModal} variant="text" sx={{ color: "black", ml: 1, mt: .6 }} size="small">{districtName}</Button>
+                                    
+                                        <Modal
+                                                open={openLocationModal}
+                                                onClose={handleCloseLocationModal}
+                                                aria-labelledby="modal-modal-title"
+                                                aria-describedby="modal-modal-description"
+                                            >
+                                            <Box  sx={style}display="flex" flexDirection="column" >
+                                                {district.map((district,index)=>(
+                                                    <MenuList>
+                                                        <MenuItem  name="districtName"  onClick={()=>SubmitDistrict(district)}  >{district}</MenuItem>
+                                                       
+                                                    </MenuList> 
+                                                ))} 
+                                            </Box>
+                                        </Modal>
+                                    
+                                    
+                                    
+                                    </Paper>
                                        
-                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpen} padding="auto" variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{startDate}</Button></Paper>
+                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpenstartModal} padding="auto" variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{startDate}</Button>
                                         <Modal
-                                                open={open}
-                                                onClose={handleClose}
+                                                open={openStartmodal}
+                                                onClose={handleCloseStartModal}
                                                 aria-labelledby="modal-modal-title"
                                                 aria-describedby="modal-modal-description"
                                             >
                                             <Box sx={style} >
-                                                <TextField type="datetime-local" name="startdate" value={startDate} onChange={ChangeStart} ></TextField>
-                                                <Button variant="contained" type="submit" color="success" sx={{m:2}} size="small">submit</Button>
+                                                <TextField type="datetime-local" name="startdate" value={startDate}  onChange={(e) => setStartDate(e.target.value)} ></TextField>
+                                                <Button variant="contained" type="submit" color="success" sx={{m:2}} size="small" onClick={handleCloseStartModal}>submit</Button>
                                             </Box>
                                         </Modal>
+                                        </Paper>
                                     
-                                    
-                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpen} variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{endDate}</Button></Paper>
+                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpenEndModal} variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{endDate}</Button>
                                         <Modal
-                                                open={open}
-                                                onClose={handleClose}
+                                                open={openEndModal}
+                                                onClose={handleCloseEndModal}
                                                 aria-labelledby="modal-modal-title"
                                                 aria-describedby="modal-modal-description"
                                             >
                                             <Box sx={style} >
-                                                <TextField type="datetime-local" name="endDate" value={endDate} onChange={onChange} ></TextField>
-                                                <Button variant="contained" color="success" sx={{m:2}} size="small">submit</Button>
+                                                <TextField type="datetime-local" name="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)}   ></TextField>
+                                                <Button variant="contained" color="success" sx={{m:2}} size="small" onClick={handleCloseEndModal}>submit</Button>
                                             </Box>
                                         </Modal>
-                                    
+                                        </Paper>
                                     <Button variant="contained" color="success" sx={{ ml: 3, mt: .6, m: 1, width: "200px", height: "40px", borderRadius: "5px" }} id="outlined-name" label="Name" size="small">Find Cars</Button>
 
                                 </Box>

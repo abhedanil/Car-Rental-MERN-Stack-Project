@@ -116,7 +116,7 @@ function Layout({children}) {
           
           <div className="content">
             
-              <div className="header ">
+              <div className="header">
                    <div>
                         {collapsed ? (
                         <i className="ri-menu-line header-action-icon" onClick={()=>setCollapsed(false)}></i>
