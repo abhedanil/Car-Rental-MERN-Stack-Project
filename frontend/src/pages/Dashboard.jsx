@@ -8,6 +8,9 @@ import { Link, useLocation, useNavigate, Navigate } from "react-router-dom"
 import { logout, reset } from "../redux/features/Auth/authSlice"
 import { toast } from 'react-toastify'
 
+import HeroSection from "../components/HeroSection"
+import  NavBar from "../components/Navbar"
+
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -54,77 +57,14 @@ function Dashboard() {
 
   return (
     <>
-      <React.Fragment>
-        <AppBar sx={{ background: "#478e00778" }}>
-          <Toolbar>
 
-            <CarRentalIcon sx={{ width: "50px", height: "50px" }} />
-            {isMatch ? (
-              <>
-                <Typography>
-                  rent-UP
-                </Typography>
-                <DrawerComp />
-              </>
-            ) : (
-
-              <>
-                <Typography>Rent-UP</Typography>
-                <Tabs textColor="inherit" value={value}
-                  onChange={(e, value) => setValue(value)}
-                  indicatorColor="secondary" >
-                  {
-                    PAGES.map((page, index) => (
-                      <Tab key={index} label={page} />
-                    ))
-                  }
-                </Tabs>
-                {user ? (
-                  <>
-                    <Link to="/becomeHost"><Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >Become A Host</Button></Link>
-                    <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >{user.name}</Button>
-                    <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={onLogout}>Logout</Button>
-                  </>
-
-                ) : (
-                  <>
-                    <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} > Login</Button>
-                    <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={toSignup}>Signup</Button>
-                  </>
-                )}
-
-
-
-              </>
-            )}
-
-          </Toolbar>
-
-        </AppBar>
-        
-        <Grid sx={{margin:"80px"}}>
-        <Card sx={{ maxWidth: 345 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
-              alt="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over 6,000
-                species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-        </Grid>
-      </React.Fragment>
+    <NavBar/>
+  
+    <HeroSection/>
+  
+  
     </>
+  
   )
 }
 
