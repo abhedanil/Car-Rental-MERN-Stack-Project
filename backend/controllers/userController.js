@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const UserModel = require('../model/UserModel')
+const CarModel = require('../model/CarModel')
 const dotenv = require('dotenv').config()
 //Register new user
 //POST/api/users
@@ -83,13 +84,33 @@ const getMe = asyncHandler(async(req,res)=>{
     })
     res.json({ message: 'User data display'})
 })
-
+   
 //Generate JWT
 
 const generateToken = (id) => {
+    console.log(id,"66666666666")
+    console.log(process.env.JWT_SECRET)
     return jwt.sign({id}, process.env.JWT_SECRET,{
         expiresIn:'30d'
     })
 }
 
-module.exports = { registerUser,loginUser,getMe}
+const getSearchCars =asyncHandler(async (req,res)=>{
+    console.log(req.body)
+    const districtname = req.body.district
+    console.log(districtname)
+    console.log("inside getSearch controller")
+    // const cars = await CarModel.find({districtname})
+    if(cars){
+        console.log(cars)
+    }
+    res.status(200).json({
+
+        cars,
+        message :"cars fetch suucessfull" 
+    }
+
+    )
+}) 
+
+module.exports = { registerUser,loginUser,getMe,getSearchCars}

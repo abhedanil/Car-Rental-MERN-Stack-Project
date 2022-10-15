@@ -76,6 +76,7 @@ export const authSlice = createSlice({
         })
         
         .addCase(register.fulfilled,(state,action)=>{
+            
             state.isLoading=false
             state.isSuccess = true
             state.user = action.payload
@@ -93,6 +94,7 @@ export const authSlice = createSlice({
             state.isLoading = true
         })
         .addCase(login.fulfilled,(state,action)=>{
+            console.log(state);
             state.isLoading=false
             state.isSuccess = true
             state.user = action.payload

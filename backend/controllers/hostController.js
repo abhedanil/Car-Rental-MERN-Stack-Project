@@ -9,13 +9,13 @@ const addNewCar =asyncHandler(async (req,res)=>{
 
     try{    
 
-
-
+        console.log("inside add car try")
+        console.log(req.body)
         const user= req.user._id
         const carimage = await cloudinary.uploader.upload(req.files.carimage[0].path)
         const RCimage = await cloudinary.uploader.upload(req.files.RCimage[0].path)
 
-       
+        
         //instance of car
         const car= new carModel({
             carname: req.body.carname,
@@ -25,7 +25,11 @@ const addNewCar =asyncHandler(async (req,res)=>{
             OwnerName:user,
             seatCapacity:req.body.seatcapacity,
             fueltype:req.body.fueltype,
-            yom:req.body.yom
+            yom:req.body.yom,
+            location:req.body.location,
+            district:req.body.district,
+            startdate:req.body.startDate,
+            enddate:req.body.endDate
 
         })
         //save car

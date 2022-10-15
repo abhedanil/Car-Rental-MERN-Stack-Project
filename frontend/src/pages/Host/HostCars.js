@@ -46,8 +46,10 @@ function HostCars() {
                             <TableCell>Seat Capacity</TableCell>
                             <TableCell>Fuel Type</TableCell>
                             <TableCell>Y.O.M</TableCell>
-                            <TableCell>status</TableCell>
-
+                            <TableCell>location</TableCell>
+                            <TableCell>district</TableCell>
+                            <TableCell>start date</TableCell>
+                            <TableCell>end date</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -63,7 +65,10 @@ function HostCars() {
                                 <TableCell>{car.seatCapacity}</TableCell>
                                 <TableCell>{car.fueltype}</TableCell>
                                 <TableCell>{car.yom}</TableCell>
-                                <TableCell>{car.status}</TableCell>
+                                <TableCell>{car.location}</TableCell>
+                                <TableCell>{car.district}</TableCell>
+                                <TableCell>{car.startdate}</TableCell>
+                                <TableCell>{car.enddate}</TableCell>
                             </TableRow>
 
                         ))}

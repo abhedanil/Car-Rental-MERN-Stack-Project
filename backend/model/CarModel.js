@@ -30,7 +30,7 @@ const carSchema = mongoose.Schema({
     },
     location:{
         type:String
-    },
+    },  
     district:{
         type:String
     },

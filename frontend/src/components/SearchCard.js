@@ -7,6 +7,11 @@ import { Box, Paper, Grid, AppBar, Toolbar, Typography, Tab, Tabs, Button, useMe
 import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+
+import { useSelector, useDispatch } from 'react-redux'
+
+import {SearchCars} from '../redux/features/searchCar/searchCarslice'
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -25,6 +30,14 @@ const style = {
 
 
 function SearchCard() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { user, isLoading, isError, isSuccess, message } =
+    useSelector(
+        (state) => state.auth
+    )
 
     const district = ['Kasaragod', 'Kannur', 'Kozhikode','Wayanad','Malappuram' ,'Thrissur','Palakkad','Eranakulam','Alappuzha','Idukki','Kollam','Kottayam','Pathanamthitta','Trivandrum']
     console.log(district.length,"11111111111111111")
@@ -46,18 +59,29 @@ function SearchCard() {
     const [endDate, setEndDate] = useState('Select end Date')
     console.log(districtName)
 
-    const navigate = useNavigate()
+ 
 
     const SubmitDistrict =(dis)=>{
                 setDistrictName(dis)
                 handleCloseLocationModal()
     }
 
-    const onSubmit=()=>{
-            navigate("/filterPage")
+    
+    let formdata= new FormData();
+
+    const onSubmit=async(e)=>{
+        e.preventDefault()
+        
+            formdata.append("district",districtName)
+            handleSubmit()
+           
+    }    
+    const handleSubmit=()=>{
+        console.log(formdata)
+        dispatch(SearchCars(districtName))
+        navigate("/filterPage")
     }
-
-
+ 
     return (
         <div>
             <Grid sx={{ margin: "120px" }}>

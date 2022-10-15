@@ -30,15 +30,15 @@ function Login() {
         useSelector(
             (state) => state.auth
         )
-
+        console.log(user,"888888888888888888")
         if (user?.isAdmin||user?.isHost) {
             navigate("/adminAndHost")
         }
         else if(user){
             console.log("gh");
             navigate("/")
-        }
-    
+        } 
+       
     
     
 

@@ -31,6 +31,11 @@ function AddCar() {
   formdata.append("yom",e.target.yom.value)
   formdata.append("carimage",carimage)
   formdata.append("RCimage",RCimage)
+  formdata.append("location",e.target.location.value)
+  formdata.append("district",e.target.district.value)
+  formdata.append("startDate",e.target.startDate.value)
+  formdata.append("endDate",e.target.endDate.value)
+  
  
   console.log(formdata)
   const response= await axios.post("/api/host/addNewCar",formdata,{
@@ -81,11 +86,11 @@ function AddCar() {
                 </FormControl>
                 <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                   <InputLabel htmlFor="outlined-adornment-amount">Start date</InputLabel>
-                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='startDate' />
+                  <OutlinedInput id="outlined-adornment-amount" type="datetime-local"  name='startDate' />
                 </FormControl>
                 <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                   <InputLabel htmlFor="outlined-adornment-amount">End date</InputLabel>
-                  <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='endDate' />
+                  <OutlinedInput id="outlined-adornment-amount" type="datetime-local" name='endDate' />
                 </FormControl>
                 <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
                   <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
