@@ -18,6 +18,9 @@ import Secondheader from './components/Secondheader';
 import CarRequest from "./pages/Admin/CarRequest"
 import FilterPage from './pages/FilterPage';
 
+import BookingCar from './pages/BookingCar';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+
 function App() {
   return (
     <>
@@ -42,6 +45,8 @@ function App() {
                <Route path="/head" element={<Secondheader/>}/>
                <Route path="/getCarRequests" element={<CarRequest/>}/>
                <Route path="/filterPage" element={<FilterPage/>}/>
+                <Route path='/booking/:carid' exact element={<BookingCar/>}/>
+                <Route path="/paymentSuccess" exact element={<PaymentSuccessPage/>}/>
           </Routes>
         </div>
       </Router>

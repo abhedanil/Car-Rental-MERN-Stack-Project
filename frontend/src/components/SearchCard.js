@@ -10,7 +10,9 @@ import MenuList from '@mui/material/MenuList';
 
 import { useSelector, useDispatch } from 'react-redux'
 
+
 import {SearchCars} from '../redux/features/searchCar/searchCarslice'
+import { setDateAndPlace } from '../redux/features/Dates/dateSlice';
 
 const style = {
     position: 'absolute',
@@ -39,6 +41,8 @@ function SearchCard() {
         (state) => state.auth
     )
 
+
+
     const district = ['Kasaragod', 'Kannur', 'Kozhikode','Wayanad','Malappuram' ,'Thrissur','Palakkad','Eranakulam','Alappuzha','Idukki','Kollam','Kottayam','Pathanamthitta','Trivandrum']
     console.log(district.length,"11111111111111111")
     
@@ -58,8 +62,8 @@ function SearchCard() {
     const [startDate,setStartDate] = useState('Select Start date ')
     const [endDate, setEndDate] = useState('Select end Date')
     console.log(districtName)
+   
 
- 
 
     const SubmitDistrict =(dis)=>{
                 setDistrictName(dis)
@@ -67,25 +71,28 @@ function SearchCard() {
     }
 
     
-    let formdata= new FormData();
+
 
     const onSubmit=async(e)=>{
+      
         e.preventDefault()
         
-            formdata.append("district",districtName)
             handleSubmit()
            
     }    
+
+    const details = {startDate,endDate,districtName}
     const handleSubmit=()=>{
-        console.log(formdata)
-        dispatch(SearchCars(districtName))
+        dispatch(setDateAndPlace(details))
+        // dispatch(SearchCars(districtName))
         navigate("/filterPage")
     }
  
+
     return (
         <div>
             <Grid sx={{ margin: "120px" }}>
-                <Card sx={{ width: "77%", margin: "auto", backgroundColor: '#d3d3d379', borderRadius: "20px", height: "80px" }}>
+                <Card sx={{ width: "55%", margin: "auto", backgroundColor: '#d3d3d379', borderRadius: "20px", height: "80px" }}>
 
 
                     <CardContent>
@@ -94,7 +101,7 @@ function SearchCard() {
 
                             <Grid item sx={{ margin: "auto" }} >
                                 <Box sx={{ display: "flex", }}  >
-                                    <Paper sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }} id="outlined-name" label="Name" size="small"><Button  onClick={handleOpenLocationModal} variant="text" sx={{ color: "black", ml: 1, mt: .6 }} size="small">{districtName}</Button>
+                                    <Paper sx={{ color: "black", m: 1, width: "400px", height: "40px", borderRadius: "5px", backgroundColor: "white" }} id="outlined-name" label="Name" size="small"><Button  onClick={handleOpenLocationModal} variant="text" sx={{ color: "black", ml: 1, mt: .6 }} size="small">{districtName}</Button>
                                     
                                         <Modal
                                                 open={openLocationModal}
@@ -116,33 +123,7 @@ function SearchCard() {
                                     
                                     </Paper>
                                        
-                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpenstartModal} padding="auto" variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{startDate}</Button>
-                                        <Modal
-                                                open={openStartmodal}
-                                                onClose={handleCloseStartModal}
-                                                aria-labelledby="modal-modal-title"
-                                                aria-describedby="modal-modal-description"
-                                            >
-                                            <Box sx={style} >
-                                                <TextField type="datetime-local" name="startdate" value={startDate}  onChange={(e) => setStartDate(e.target.value)} ></TextField>
-                                                <Button variant="contained" type="submit" color="success" sx={{m:2}} size="small" onClick={handleCloseStartModal}>submit</Button>
-                                            </Box>
-                                        </Modal>
-                                        </Paper>
-                                    
-                                    <Paper  sx={{ color: "black", m: 1, width: "200px", height: "40px", borderRadius: "5px", backgroundColor: "white" }}  size="small"><Button onClick={handleOpenEndModal} variant="text" sx={{ color: "black", ml: 3, mt: .6 }} size="small">{endDate}</Button>
-                                        <Modal
-                                                open={openEndModal}
-                                                onClose={handleCloseEndModal}
-                                                aria-labelledby="modal-modal-title"
-                                                aria-describedby="modal-modal-description"
-                                            >
-                                            <Box sx={style} >
-                                                <TextField type="datetime-local" name="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)}   ></TextField>
-                                                <Button variant="contained" color="success" sx={{m:2}} size="small" onClick={handleCloseEndModal}>submit</Button>
-                                            </Box>
-                                        </Modal>
-                                        </Paper>
+                               
                                     <Button variant="contained" color="success" sx={{ ml: 3, mt: .6, m: 1, width: "200px", height: "40px", borderRadius: "5px" }} id="outlined-name" label="Name" size="small" onClick={onSubmit} >Find Cars</Button>
 
                                 </Box>

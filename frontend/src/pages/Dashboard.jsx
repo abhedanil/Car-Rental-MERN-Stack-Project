@@ -21,7 +21,7 @@ import { CardActionArea } from '@mui/material';
 import { Grid, AppBar, Toolbar, Typography, Tab, Tabs, Button, useMediaQuery, useTheme } from "@mui/material"
 import CarRentalIcon from '@mui/icons-material/CarRental'
 import DrawerComp from "../components/DrawerComp"
-const PAGES = ["products", "services", "About", "Contact Us",]
+const PAGES = ["Your Bookings", "services", "About", "Contact Us",]
 
 
 function Dashboard() {

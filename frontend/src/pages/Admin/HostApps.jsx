@@ -35,7 +35,7 @@ function HostApps() {
         hostApps()
        
     }, [])
-   
+          
 
     const changeHostStatus=async(formId)=>{
        console.log(userId);
@@ -89,12 +89,10 @@ function HostApps() {
                                     ) : (<h3>Approved</h3>)}</TableCell>
                                  
                                 </TableRow>
-                            ))}
+                            ))} 
                         </TableBody>
                     </Table>
                 </TableContainer>
-
-
         </Layout>
 
     )

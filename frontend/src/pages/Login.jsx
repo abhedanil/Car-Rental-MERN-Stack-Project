@@ -83,7 +83,7 @@ function Login() {
                         </Grid>
                         <form onSubmit={onSubmit}>
                             <TextField label='Email' type="text" name="email" value={email} onChange={onChange} fullWidth sx={{ margin: "5px 0" }} />
-                            <TextField label='Password' fullWidth type="text" name="password" value={password} onChange={onChange} sx={{ margin: "5px 0" }} />
+                            <TextField label='Password' fullWidth type="password" name="password" value={password} onChange={onChange} sx={{ margin: "5px 0" }} />
 
 
                             <Box align="center" sx={{ margin: "10px 0" }}>

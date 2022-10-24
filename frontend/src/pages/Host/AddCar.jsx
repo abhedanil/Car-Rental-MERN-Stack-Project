@@ -25,16 +25,18 @@ function AddCar() {
   
   let formdata= new FormData();
   formdata.append("carname",e.target.carname.value);
+  formdata.append("companyName",e.target.companyName.value)
   formdata.append("cartype",e.target.cartype.value);
   formdata.append("seatcapacity",e.target.seatcapacity.value);
   formdata.append("fueltype",e.target.fueltype.value)
+  formdata.append("transmission",e.target.transmission.value)
+  formdata.append("rentperday",e.target.rentperday.value)
   formdata.append("yom",e.target.yom.value)
   formdata.append("carimage",carimage)
   formdata.append("RCimage",RCimage)
   formdata.append("location",e.target.location.value)
   formdata.append("district",e.target.district.value)
-  formdata.append("startDate",e.target.startDate.value)
-  formdata.append("endDate",e.target.endDate.value)
+
   
  
   console.log(formdata)
@@ -61,6 +63,10 @@ function AddCar() {
                   <OutlinedInput id="outlined-adornment-amount" type='text'  name='carname' />
                 </FormControl>
                 <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Company Name</InputLabel>
+                  <OutlinedInput id="outlined-adornment-amount" type='text' name='companyName' />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                   <InputLabel htmlFor="outlined-adornment-amount">Car Type</InputLabel>
                   <OutlinedInput id="outlined-adornment-amount" type='text' name='cartype' />
                 </FormControl>
@@ -73,6 +79,15 @@ function AddCar() {
                   <OutlinedInput id="outlined-adornment-amount" label="fueltype"type='text' name='fueltype' />
                 </FormControl>
                 <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Transmission Type</InputLabel>               
+                  <OutlinedInput id="outlined-adornment-amount" label="transmission"type='text' name='transmission' />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Rent Per Day</InputLabel>               
+                  <OutlinedInput id="outlined-adornment-amount" label="transmission"type='text' name='rentperday' />
+                </FormControl>
+                
+                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                   <InputLabel htmlFor="outlined-adornment-amount">Year Of Manufacture</InputLabel>
                   <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='yom' />
                 </FormControl>
@@ -84,14 +99,7 @@ function AddCar() {
                   <InputLabel htmlFor="outlined-adornment-amount">District</InputLabel>
                   <OutlinedInput id="outlined-adornment-amount"  label="Amount" name='district' />
                 </FormControl>
-                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
-                  <InputLabel htmlFor="outlined-adornment-amount">Start date</InputLabel>
-                  <OutlinedInput id="outlined-adornment-amount" type="datetime-local"  name='startDate' />
-                </FormControl>
-                <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
-                  <InputLabel htmlFor="outlined-adornment-amount">End date</InputLabel>
-                  <OutlinedInput id="outlined-adornment-amount" type="datetime-local" name='endDate' />
-                </FormControl>
+     
                 <Typography sx={{ mr: 50 }} align="center">Upload Car Image</Typography>
                   <FormControl fullWidth sx={{ m: 1, width: '70ch', ml: 45 }}>
                       <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>

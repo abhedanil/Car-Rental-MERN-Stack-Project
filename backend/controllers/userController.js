@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const UserModel = require('../model/UserModel')
 const CarModel = require('../model/CarModel')
+const BookingModel=require('../model/BookingModel')
 const dotenv = require('dotenv').config()
+const Razorpay = require('razorpay')
+const crypto = require('crypto')
 //Register new user
 //POST/api/users
 const registerUser = asyncHandler(async(req,res)=>{
@@ -95,22 +98,155 @@ const generateToken = (id) => {
     })
 }
 
-const getSearchCars =asyncHandler(async (req,res)=>{
-    console.log(req.body)
-    const districtname = req.body.district
-    console.log(districtname)
-    console.log("inside getSearch controller")
-    // const cars = await CarModel.find({districtname})
-    if(cars){
-        console.log(cars)
-    }
-    res.status(200).json({
+const getAllCars =asyncHandler(async(req,res)=>{
+   
+  
+    try{  
+    
+        const cars = await CarModel.find({})
 
-        cars,
-        message :"cars fetch suucessfull" 
+        if(cars){
+        console.log(cars)   
+        }
+        res.status(200).json({
+    
+            cars,
+ 
+            message :"cars fetch suucessfull" 
+        }
+        )
+    }catch(error){
+
+        res.status(400).json({
+            error,
+
+        })
     }
 
-    )
 }) 
 
-module.exports = { registerUser,loginUser,getMe,getSearchCars}
+const getMyCars =asyncHandler(async(req,res)=>{
+
+    console.log("inside get my cars")
+
+    try{
+        const cars= await CarModel.find({})
+        if(cars){
+            console.log(cars,"888888888")
+        }
+        res.status(200).status({
+            cars,
+            message:"cars found successfull"
+        })
+    }catch(error){
+        console.log(error)
+        res.status(400).json({
+            error
+        })
+       
+    }
+})
+  
+
+const getSingleCar = asyncHandler(async(req,res)=>{
+    const carid = req.params.carid
+    console.log(carid)
+
+    try{
+
+        const singleCar= await CarModel.find({_id:carid})
+        console.log(singleCar,"single")
+        res.status(200).json({
+            singleCar,
+            message:"single car fetch successful"
+        })
+    }catch(error){
+        console.log(error)
+        res.status(400).json({
+            error
+        })
+    }
+})
+
+const orders =asyncHandler(async(req,res)=>{
+    console.log(req.body,"00000000")
+    const bookingObj = BookingModel({
+        carname:req.body.carname,
+        startDate:req.body.startdate,
+        endDate:req.body.endDate,
+        totalDays:req.body.days,
+        totalAmount:req.body.amount,
+        user:req.user._id
+    })
+
+    const saved=  await bookingObj.save()
+    if(saved){
+        console.log(saved)
+    }
+    try{
+        const instance = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET,
+          })
+
+
+          const options = {
+            amount: req.body.amount * 100, // 
+            currency: "INR",
+            receipt: "receipt#1",
+            payment_capture: 0,
+       // 1 for automatic capture // 0 for manual capture
+          };
+        instance.orders.create(options, async function (err, order) {
+          if (err) {
+            return res.status(500).json({
+              message: "Something Went Wrong",
+            });
+          }
+        return res.status(200).json(order);
+       });
+
+    }catch(error){
+        console.log(error)
+        res.status(500).json({message:"internal server error"})
+    }
+})     
+
+
+const verifyPayment = asyncHandler(async(req,res)=>{
+
+    try{
+        console.log("entered verify")
+
+        const {razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature}= req.body
+        
+        const sign = razorpay_order_id + "|" + razorpay_payment_id
+        var expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+                                  .update(sign.toString())
+                                  .digest('hex');
+        
+        if(razorpay_signature===expectedSignature)
+        {     
+            return res.status(200).json({
+                message:"payment succesfull"
+            })
+        }
+        else{
+            return res.status(400).json({
+                message:"invalid signature sent!"
+            })
+        }
+
+    }catch(error){
+
+
+        console.log(error)
+        res.status(500).json({
+            message:"internal server error"
+        })
+    }
+})
+
+module.exports = { registerUser,loginUser,getMe,getAllCars,getMyCars,getSingleCar,orders,verifyPayment}

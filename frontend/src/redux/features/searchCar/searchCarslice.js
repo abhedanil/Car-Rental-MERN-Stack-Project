@@ -12,9 +12,9 @@ const initialState = {
 
 export const SearchCars = createAsyncThunk(
 
-    'cars/create', async (districtName, thunkAPI) => {
+    'cars/create', async (districtName,thunkAPI) => {
         console.log("inside car Search slice")
-        console.log(districtName)
+        console.log(districtName,"iiiiiiiiiiiiiiiiiiiiiinnnnnnnnn")
 
         try {
             console.log("inside car Search slice  try")
@@ -46,8 +46,7 @@ export const searchCarSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(SearchCars.fulfilled, (state,action) => {
-                console.log(state.isSuccess,"sttttttttttt");
-                console.log(action.payload,"payload inside reducer")
+            
                 state.isLoading=false
                 state.isSuccess=true
                 state.searchCars.push(action.payload)

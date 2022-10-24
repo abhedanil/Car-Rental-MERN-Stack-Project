@@ -9,6 +9,9 @@ const carSchema = mongoose.Schema({
         type:String,
         required:[true, 'Please add car name']
     },
+    companyName:{
+        type:String
+    },
     cartype:{
         type:String,
         required:[true,'Please add cartype']
@@ -17,6 +20,9 @@ const carSchema = mongoose.Schema({
         type:String,
     },
     fueltype:{
+        type:String
+    },
+    transmission:{
         type:String
     },
     yom:{
@@ -34,12 +40,10 @@ const carSchema = mongoose.Schema({
     district:{
         type:String
     },
-    startdate:{
-        type:Date
-    },
-    enddate:{
-        type:Date
-    },
+    rentPerDay:{
+        type:String
+    }
+ 
     
 }
 )

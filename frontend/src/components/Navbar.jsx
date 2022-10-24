@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate, Navigate } from "react-router-dom"
 import { logout, reset } from "../redux/features/Auth/authSlice"
 
 function NavBar() {
-  const PAGES = ["products", "services", "About", "Contact Us",]
+  const PAGES = ["Your Bookings", "About", "Contact Us",]
   const { user } =
   useSelector(
     (state) => state.auth
@@ -45,7 +45,7 @@ function NavBar() {
     <AppBar sx={{ background: "black" }}>
         <Toolbar>
 
-          <CarRentalIcon sx={{ width: "50px", height: "50px" }} />
+          <CarRentalIcon  sx={{ width: "50px", height: "50px" }} onClick={()=>navigate("/")}/>
           {isMatch ? (
             <>
               <Typography>
@@ -57,18 +57,19 @@ function NavBar() {
 
             <>
               <Typography>Rent-UP</Typography>
-              <Tabs textColor="inherit" value={value}
+              
+              <Tabs sx={{ml:"600px"}}textColor="inherit" value={value}
                 onChange={(e, value) => setValue(value)}
                 indicatorColor="secondary" >
                 {
                   PAGES.map((page, index) => (
-                    <Tab key={index} label={page} />
+                    <Tab sx={{}} key={index} label={page} />
                   ))
                 }
               </Tabs>
               {user ? (
                 <>
-                  <Link to="/becomeHost"><Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >Become A Host</Button></Link>
+                  < Button sx={{color:"#fae8e8"}}>Become a host</Button>
                   <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >{user.name}</Button>
                   <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={onLogout}>Logout</Button>
                 </>

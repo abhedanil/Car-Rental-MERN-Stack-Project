@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/goalDB',{
 
 }).then(()=>{
     console.log('DB Connected')
-}).catch((err)=>{
+}).catch((err)=>{ 
     console.log(err.message) 
 })
 
