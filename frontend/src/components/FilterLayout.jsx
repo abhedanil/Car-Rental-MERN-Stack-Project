@@ -6,7 +6,21 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux'
 
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { Button } from '@mui/material';
+
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import SpeedIcon from '@mui/icons-material/Speed';
+
 
 
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
@@ -46,15 +60,13 @@ function FilterLayout() {
 
 
 
-    const dateAndPlace = useSelector((state) => state.dateAndPlace)
-    const { districtName, startDate, endDate } = dateAndPlace.dates[0]
-    console.log(dateAndPlace.dates[0], "daaaaaaaaaaaaaaaaaaaa")
-    console.log(districtName, "diiiiiiiiss")
-    console.log(startDate, "sttttttttttaaaaaaaaaa");
+    const district = JSON.parse(localStorage.getItem('districtName'))
+    console.log(district, "*********")
+
+    const districtName = district.districtName
 
 
-    const [propsItem,setPropsItem] = useState()
-    console.log(propsItem,"proooooooops")
+
     const [isSuvActive, setSuvActive] = useState(false)
     const [isSedanActive, setSedanActive] = useState(false)
     const [isHatchbackActive, setHachbackActive] = useState(false)
@@ -63,25 +75,22 @@ function FilterLayout() {
     const [isAutomaticActive, setAutomaticActive] = useState(false)
     const [isElectricActive, setElectricActive] = useState(false)
 
-    const [isLowtoHighActive,setLowToHighActive]= useState(false)
-    const [isHightoLowActive,setHighToLowActive]= useState(false)
+    const [isLowtoHighActive, setLowToHighActive] = useState(false)
+    const [isHightoLowActive, setHighToLowActive] = useState(false)
 
     const Suvselected = () => {
         setSuvActive(!isSuvActive)
         console.log(isSuvActive, "iiiiiiiiiiiiiiiiiiiiiiiiii33333")
     }
 
-    const HatchbackSelected = (category) => {
+    const HatchbackSelected = () => {
         setHachbackActive(!isHatchbackActive)
-        if(isHatchbackActive===true){
-            setPropsItem(category)
-        }
-       
-     
+        
+
     }
     const SedanSelected = () => {
         setSedanActive(!isSedanActive)
-      
+
         console.log(isSedanActive)
     }
     const ManualSelected = () => {
@@ -94,12 +103,67 @@ function FilterLayout() {
         setElectricActive(!isElectricActive)
     }
 
-    const LowToHighSelected =()=>{
+    const LowToHighSelected = () => {
         setLowToHighActive(!isLowtoHighActive)
     }
-    const HighToLowSelected =()=>{
+    const HighToLowSelected = () => {
         setHighToLowActive(!isHightoLowActive)
     }
+
+    const [searchResult, setSearchResult] = useState([])
+    const [Items, setItems] = useState()
+    const searchCar = async () => {
+
+        try {
+
+            const response = await axios.get('/api/users/getAllCars')
+            if (response) {
+                console.log(response.data.cars, "resssssssssssss555555")
+                setSearchResult(response.data.cars)
+                setItems(response.data.cars)
+               console.log(Items,"caaa")
+            }
+        
+        } catch (error) {
+        }
+    }
+
+
+    useEffect(() => {
+        searchCar()
+
+
+    }, [])
+
+
+    const filterByCarType = (carType) => {
+        if (carType) {
+
+            console.log(carType, "tttttttttttyyyyyyyyyyyypeeee")
+            const updatedItems = Items.filter((curElem) => {
+                return curElem.cartype === carType
+            })
+            setItems(updatedItems)
+            console.log(Items, "itemmmmmmmmmmmmmmmmmmmmmmssssssss")
+        }
+        else{
+            setItems(searchResult)
+        }
+    }   
+    
+    const filterByTransmissionType=(transmissionType)=>{
+        if(transmissionType){
+            const updatedItems= Items.filter((curElem)=>{
+                return curElem.transmission === transmissionType
+            })
+            setItems(updatedItems)
+        }
+        else{
+            setItems(searchResult)
+        }
+    }
+
+
     return (
         <div>
             <Box sx={{ mt: 9, flexGrow: 1, backgroundColor: '#bdc2c8', height: "100vh" }}>
@@ -123,8 +187,8 @@ function FilterLayout() {
                                     </Grid>
                                     <Grid Item xs={6} >
                                         <Item sx={{ m: .5, height: "10vh" }} >
-                                            <Typography sx={{ mt: 1, fontSize: "11px" }}>start-date:{startDate} </Typography>
-                                            <Typography sx={{ fontSize: "12px" }}>end-date:{endDate} </Typography>
+                                            <Typography sx={{ mt: 1, fontSize: "11px" }}>start-date:  </Typography>
+                                            <Typography sx={{ fontSize: "12px" }}>end-date: </Typography>
                                         </Item>
                                     </Grid>
                                 </Grid>
@@ -142,7 +206,7 @@ function FilterLayout() {
 
                                     {isSedanActive ? (
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={SedanSelected}  >
+                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={() => { SedanSelected();filterByCarType()  }}  >
                                                 <TimeToLeaveIcon />
                                                 <Typography >Sedan</Typography>
                                             </Item>
@@ -150,7 +214,7 @@ function FilterLayout() {
                                         </>) :
                                         (
                                             <>
-                                                <Item sx={{ m: .5, height: "10vh" }} onClick={SedanSelected} >
+                                                <Item sx={{ m: .5, height: "10vh" }} onClick={()=>{ SedanSelected();filterByCarType('sedan')}} >
                                                     <TimeToLeaveIcon />
                                                     <Typography >Sedan</Typography>
                                                 </Item>
@@ -163,7 +227,7 @@ function FilterLayout() {
 
                                     {isHatchbackActive ? (
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={()=>HatchbackSelected('Hatchback')}  >
+                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={() => { HatchbackSelected(); filterByCarType() }} >
                                                 <TimeToLeaveIcon />
                                                 <Typography >Hatchback</Typography>
                                             </Item>
@@ -171,7 +235,7 @@ function FilterLayout() {
                                         </>) :
                                         (
                                             <>
-                                                <Item sx={{ m: .5, height: "10vh" }} onClick={()=>HatchbackSelected('Hatchback')}  >
+                                                <Item sx={{ m: .5, height: "10vh" }} onClick={() => { HatchbackSelected(); filterByCarType('Hatchback') }}  >
                                                     <TimeToLeaveIcon />
                                                     <Typography >Hatchback</Typography>
                                                 </Item>
@@ -185,17 +249,17 @@ function FilterLayout() {
                                     {isSuvActive ? (
 
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={Suvselected} >
+                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={()=>{Suvselected();filterByCarType()}} >
                                                 <TimeToLeaveIcon />
                                                 <Typography  >SUV</Typography>
                                             </Item>
                                         </>
-
+                                                                               
 
                                     ) : (
 
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", }} onClick={Suvselected} >
+                                            <Item sx={{ m: .5, height: "10vh", }}  onClick={()=>{Suvselected();filterByCarType('SUV')}} >
                                                 <TimeToLeaveIcon />
                                                 <Typography  >SUV</Typography>
                                             </Item>
@@ -213,14 +277,14 @@ function FilterLayout() {
                                     {isManualActive ? (
 
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={ManualSelected} >
+                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={()=>{ManualSelected();filterByTransmissionType()}} >
                                                 <SettingsIcon />
                                                 <Typography>Manual</Typography>
                                             </Item>
                                         </>
                                     ) : (
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh" }} onClick={ManualSelected}>
+                                            <Item sx={{ m: .5, height: "10vh" }} onClick={()=>{ManualSelected();filterByTransmissionType('manual')}}>
                                                 <SettingsIcon />
                                                 <Typography>Manual</Typography>
                                             </Item>
@@ -234,14 +298,14 @@ function FilterLayout() {
 
 
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={AutomaticSelected} >
-                                                <MotionPhotosAutoIcon/>
+                                            <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={()=>{AutomaticSelected();filterByTransmissionType()}} >
+                                                <MotionPhotosAutoIcon />
                                                 <Typography>Automatic</Typography>
                                             </Item>
                                         </>
                                     ) : (
                                         <>
-                                            <Item sx={{ m: .5, height: "10vh" }} onClick={AutomaticSelected}>
+                                            <Item sx={{ m: .5, height: "10vh" }} onClick={()=>{AutomaticSelected();filterByTransmissionType('Automatic')}}>
                                                 <MotionPhotosAutoIcon />
                                                 <Typography>Automatic</Typography>
                                             </Item>
@@ -254,14 +318,14 @@ function FilterLayout() {
 
                                         <>
                                             <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={ElectricSelected} >
-                                                <EvStationIcon/>
+                                                <EvStationIcon />
                                                 <Typography>Electric</Typography>
                                             </Item>
                                         </>
                                     ) : (
                                         <>
                                             <Item sx={{ m: .5, height: "10vh" }} onClick={ElectricSelected}>
-                                                <EvStationIcon/>
+                                                <EvStationIcon />
                                                 <Typography>Electric</Typography>
                                             </Item>
                                         </>
@@ -290,53 +354,89 @@ function FilterLayout() {
 
                                     </Grid>
                                     <Grid Item sx={{ mt: 0 }} xs={3} >
-                                        {isLowtoHighActive?(
+                                        {isLowtoHighActive ? (
                                             <>
-                                             <Item sx={{ m: .5, height: "7vh",backgroundColor:"#d7df21" }} onClick={LowToHighSelected}>
-                                                <Typography>price:low to high </Typography>
-                                             </Item>
+                                                <Item sx={{ m: .5, height: "7vh", backgroundColor: "#d7df21" }} onClick={LowToHighSelected}>
+                                                    <Typography>price:low to high </Typography>
+                                                </Item>
                                             </>
 
-                                        ):(
+                                        ) : (
 
                                             <>
-                                            <Item sx={{ m: .5, height: "7vh" }} onClick={LowToHighSelected}>
-                                                <Typography>price:low to high </Typography>
-                                             </Item>
+                                                <Item sx={{ m: .5, height: "7vh" }} onClick={LowToHighSelected}>
+                                                    <Typography>price:low to high </Typography>
+                                                </Item>
                                             </>
                                         )}
-                                       
-                                       
+
+
                                     </Grid>
                                     <Grid Item sx={{ mt: 0 }} xs={3} >
-                                        {isHightoLowActive?(
-                                             <>
-                                                 <Item sx={{ m: .5, height: "7vh",backgroundColor:"#d7df21" }} onClick={HighToLowSelected}>
-                                                  <Typography>price:low to high </Typography>
+                                        {isHightoLowActive ? (
+                                            <>
+                                                <Item sx={{ m: .5, height: "7vh", backgroundColor: "#d7df21" }} onClick={HighToLowSelected}>
+                                                    <Typography>price:low to high </Typography>
                                                 </Item>
-                                             </>
+                                            </>
 
-                                            ):(
+                                        ) : (
 
-                                             <>
+                                            <>
                                                 <Item sx={{ m: .5, height: "7vh" }} onClick={HighToLowSelected}>
-                                                  <Typography>price:low to high </Typography>
+                                                    <Typography>price:low to high </Typography>
                                                 </Item>
-                                              </>
+                                            </>
                                         )}
                                     </Grid>
                                     <Grid Item xs={4} >
 
                                     </Grid>
 
-                                </Grid>       
+                                </Grid>
 
 
                             </Item>
                         </Grid>
                         <Grid sx={{ mt: 2 }}>
 
-                            <FilterResult props={propsItem} />
+                            <TableContainer sx={{ ml: 0, mb: 3 }} component={Paper} >
+                                <Table sx={{ minWidth: 550 }} size="small" aria-label="a dense table">
+                                    <TableHead>
+
+                                    </TableHead>
+                                    {Items ? (
+
+                                        <>
+                                            <TableBody >
+                                                {Items?.map((car) => (
+                                                    <TableRow
+                                                        key={car.carname}
+                                                    >
+                                                        <TableCell sx={{ width: "250px" }} >
+                                                            <img src={car.carimage} style={{ width: "150px", height: "100px" }} />
+                                                        </TableCell>
+                                                        <TableCell align="left" sx={{ mr: "5" }} >
+                                                            <Typography variant="h5">{car.companyName} {car.carname}</Typography>
+                                                            <Typography sx={{ mt: 1 }} > <EventSeatIcon sx={{ width: "17px" }} />  {car.seatCapacity}seater    <LocalGasStationIcon sx={{ width: "17px" }} /> {car.fueltype}    <SpeedIcon sx={{ width: "17px" }} />  {car.transmission}</Typography>
+                                                        </TableCell>
+                                                        {/*<TableCell align="center" ></TableCell>*/}
+                                                        <TableCell align="center">{car.location} | {car.district}</TableCell>
+                                                        <TableCell align="center" ><Typography sx={{ color: "black", fontWeight: "bold" }} variant="h6">{car.rentPerDay}₹</Typography></TableCell>
+                                                        <TableCell align="center" ><Button variant="contained" color="success"><Link to={`/booking/${car._id}`}>Book now</Link></Button></TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Typography>Nothing to show</Typography>
+                                        </>
+                                    )}
+
+                                </Table>
+                            </TableContainer>
+
                         </Grid>
                     </Grid>
 

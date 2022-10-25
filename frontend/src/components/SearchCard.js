@@ -59,8 +59,7 @@ function SearchCard() {
     const handleCloseLocationModal = () => setOpenLocationModal(false)
     
     const [districtName,setDistrictName] = useState('Select District')
-    const [startDate,setStartDate] = useState('Select Start date ')
-    const [endDate, setEndDate] = useState('Select end Date')
+
     console.log(districtName)
    
 
@@ -81,7 +80,7 @@ function SearchCard() {
            
     }    
 
-    const details = {startDate,endDate,districtName}
+    const details = {districtName}
     const handleSubmit=()=>{
         dispatch(setDateAndPlace(details))
         // dispatch(SearchCars(districtName))
