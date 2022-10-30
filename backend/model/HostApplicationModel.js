@@ -42,8 +42,14 @@ const applicationSchema = mongoose.Schema({
     },
     idproof:{
         type:String
+    },
+    IdImage:{
+        type:String
+    },
+    userImage:{
+        type:String
     }
-
+     
 },  
 {
     timestamps:true

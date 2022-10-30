@@ -4,6 +4,7 @@ const path = require('path')
 //multer config
 
 module.exports = multer({
+
     storage:multer.diskStorage({}),
         fileFilterL:(req,file,cb)=>{
             let ext = path.extname(file.originalname)
@@ -12,6 +13,7 @@ module.exports = multer({
                 return;
             }
             cb(null, true)
-
         }
-    })
+       
+    }
+    )

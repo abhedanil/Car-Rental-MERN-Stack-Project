@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material/styles';
 import MuiInput from '@mui/material/Input';
-import { Avatar, Paper, Typography,  Button } from '@mui/material'
+import { Avatar, Paper, Typography,  Button , FormControl, InputLabel, OutlinedInput } from '@mui/material'
 import { Box } from '@mui/system'
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { spacing } from '@mui/system';
@@ -24,7 +24,7 @@ import {
 
 
 function ApplyForm() {
-    const paperStyle = { padding: '30px 20px', width: 500, margin: '70px auto', }
+    const paperStyle = { padding: '30px 20px', width: 500, margin: '80px auto', }
     const headerStyle = { margin: "10px 0", }
     const avatarStyle = { backgroundColor: '#1bbd72' }
 
@@ -41,7 +41,25 @@ function ApplyForm() {
         idproof:''
         
     })
+
+    const [IdImage,setIdImage] = useState()
+    const [userImage,setUserImage] = useState()
+
     const { firstname, lastname, email, phone, place, district, state, idproof } = formData
+
+    const AppData = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        phone: phone,
+        place: place,
+        district:district,
+        state:state,
+        idproof:idproof,
+    }
+
+
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -52,13 +70,14 @@ function ApplyForm() {
         }))
     }
 
-    
+  
     const onSubmit=async(e)=>{
         e.preventDefault()
-        const formData = {firstname, lastname,email, phone,place,district,state,idproof}
+        const formdata = {firstname, lastname,email, phone,place,district,state,idproof,userImage,IdImage}
+        console.log(formdata,"fffffff")
         try{
             const response= await axios.post("/api/application/newApplicationform",{
-                ...formData
+                formdata
             },{
                 headers:{
                     Authorization: `Bearer ${token}`
@@ -78,11 +97,10 @@ function ApplyForm() {
     }
 
 
-
     return (
 
-        <div className='outer'>
-    <Grid >
+        <div style={{width:"120%"}} align="center">
+            <Grid  sx={{}} >
                 <Paper elevation={20} style={paperStyle}>
                     <Grid align="center">
                         <Avatar style={avatarStyle}>
@@ -100,7 +118,7 @@ function ApplyForm() {
                        
                         <TextField type="email" label="Email" className="form-control"
                             id="email" name="email"
-                            value={email} sx={{ margin: "5px 0" }} onChange={onChange} />
+                            value={email} sx={{ margin: "5px 0" }} onChange={onChange} fullWidth />
                         <TextField type="text" label="phone" name="phone" value={phone}  fullWidth sx={{ margin: "5px 0" }} onChange={onChange} />            
                         <TextField  type="text" label="Enter exact place" className='form-control'
                             id="place" name="place"
@@ -114,13 +132,22 @@ function ApplyForm() {
 
                         <TextField type="text"  label="Enter voter id number" className="form-control"
                             id="idproof" name="idproof"
-                            value={idproof} fullWidth sx={{ margin: "5px 0" }} onChange={onChange} />      
-                        
-                        
-                        
+                            value={idproof} fullWidth sx={{ margin: "5px 0" }} onChange={onChange} />
+
+                        <Typography  align="center" sx={{ margin: "5px 0" }}>Upload Identification</Typography>
+                            <FormControl sx={{ margin: "5px 0" }}>
+                            <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
+                            <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='IdImage' onChange={(e)=>setIdImage(e.target.files[0])} sx={{ margin: "5px 0" }}/>
+                            </FormControl>
+                        <Typography  align="center" sx={{ margin: "5px 0" }}>Upload Your Image</Typography>
+                            <FormControl sx={{ margin: "5px 0" }}>
+                            <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
+                            <OutlinedInput id="outlined-adornment-amount" label="Amount" type="file" name='userImage' onChange={(e)=>setUserImage(e.target.files[0])} sx={{ margin: "5px 0" }}/>
+                            </FormControl> 
                         <Box align="center" sx={{ margin: "10px 0" }}>
                             <Button type="submit" variant="contained" color="primary" align="center">Submit</Button>
                         </Box>
+
 
                     </form>
                 </Paper>

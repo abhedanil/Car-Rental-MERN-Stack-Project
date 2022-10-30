@@ -21,6 +21,9 @@ import FilterPage from './pages/FilterPage';
 import BookingCar from './pages/BookingCar';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 
+import UserBookings from '../src/pages/UserBookings';
+import UserAccount from './pages/UserAccount';
+
 function App() {
   return (
     <>
@@ -47,6 +50,7 @@ function App() {
                <Route path="/filterPage" element={<FilterPage/>}/>
                 <Route path='/booking/:carid' exact element={<BookingCar/>}/>
                 <Route path="/paymentSuccess" exact element={<PaymentSuccessPage/>}/>
+                <Route path="/userProfile" exact element={<UserAccount/>}/>
           </Routes>
         </div>
       </Router>

@@ -39,7 +39,7 @@ function AddCar() {
 
   
  
-  console.log(formdata)
+  console.log(formdata,"ffffffff")
   const response= await axios.post("/api/host/addNewCar",formdata,{
     headers:{
       Authorization: `Bearer ${token}`

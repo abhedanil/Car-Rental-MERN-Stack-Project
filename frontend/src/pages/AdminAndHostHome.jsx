@@ -6,7 +6,7 @@ function AdminAndHostHome() {
   return (
     <div>
       <Layout/>
-    </div>
+    </div> 
   )
 }
 

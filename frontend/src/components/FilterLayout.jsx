@@ -111,7 +111,9 @@ function FilterLayout() {
     }
 
     const [searchResult, setSearchResult] = useState([])
-    const [Items, setItems] = useState()
+    const [Items, setItems] = useState(searchResult)
+    const [transmissionFilters,setTransmissionFilters]= useState()
+    const [carGroupFilters,setCarGroupFilters]= useState()
     const searchCar = async () => {
 
         try {
@@ -137,6 +139,7 @@ function FilterLayout() {
 
 
     const filterByCarType = (carType) => {
+   
         if (carType) {
 
             console.log(carType, "tttttttttttyyyyyyyyyyyypeeee")
@@ -144,25 +147,39 @@ function FilterLayout() {
                 return curElem.cartype === carType
             })
             setItems(updatedItems)
+            setCarGroupFilters(updatedItems)
             console.log(Items, "itemmmmmmmmmmmmmmmmmmmmmmssssssss")
         }
+        
         else{
             setItems(searchResult)
         }
     }   
     
     const filterByTransmissionType=(transmissionType)=>{
+  
         if(transmissionType){
-            const updatedItems= Items.filter((curElem)=>{
-                return curElem.transmission === transmissionType
-            })
-            setItems(updatedItems)
+            if(carGroupFilters){
+
+                const updatedItems= carGroupFilters.filter((curElem)=>{
+                    return curElem.transmission === transmissionType
+                })
+                setItems(updatedItems)
+            }
+            else{
+                const updatedItems= Items.filter((curElem)=>{
+                    return curElem.transmission === transmissionType
+                })
+                setItems(updatedItems)
+            }
+
         }
         else{
+        
             setItems(searchResult)
+          
         }
     }
-
 
     return (
         <div>
@@ -295,8 +312,7 @@ function FilterLayout() {
                                 </Grid>
                                 <Grid Item xs={4} >
                                     {isAutomaticActive ? (
-
-
+                                        
                                         <>
                                             <Item sx={{ m: .5, height: "10vh", backgroundColor: "#d7df21" }} onClick={()=>{AutomaticSelected();filterByTransmissionType()}} >
                                                 <MotionPhotosAutoIcon />

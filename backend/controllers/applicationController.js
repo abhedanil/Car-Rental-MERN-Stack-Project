@@ -2,23 +2,43 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const ApplicationModel = require("../model/ApplicationModel")
+const cloudinary = require('../utils/cloudinary')
 const dotenv = require('dotenv').config()
 
 //Add Application
 
 const ApplyForm = asyncHandler(async (req, res) => {
-    console.log("inside apply form")
+
     const user = req.user._id
+    console.log(req.body,"**************")
     console.log(user)
     const { firstname, lastname, email, phone, place, district, state, idproof } = req.body
-    console.log(req.body, "ssssssssssssssssss");
-    if (!firstname || !lastname || !email || !phone || !place || !district || !state || !idproof) {
-        res.status(400)
-        throw new error("Please fill the fields")
-    }
+
+    // if (!firstname || !lastname || !email || !phone || !place || !district || !state || !idproof) {
+    //     res.status(400)
+    //     throw new error("Please fill the fields")
+    // }   
     //check if user exist
-    try {
-        const newform = new ApplicationModel({ ...req.body, userId: user })
+    try { 
+        console.log("inside try");
+        const IdImage = await cloudinary.uploader.upload(req.files.IdImage[0].path)
+        const userImage = await cloudinary.uploader.upload(req.files.userImage[0].path)
+   
+        const newform = new ApplicationModel({ 
+            userId:user,
+            firstname:req.body.firstname,
+            lastname:req.body.lastname,
+            email:req.body.email,
+            phone:req.body.phone,
+            place:req.body.place,
+            state:req.body.state,
+            district:req.body.district,
+            status:req.body.status,
+            idproof:req.body.idproof,
+            IdImage:IdImage.url,
+            userImage:userImage.url
+
+        })
         await newform.save()
 
         res.status(200).json({
@@ -31,8 +51,10 @@ const ApplyForm = asyncHandler(async (req, res) => {
         res.status(500).json({
             message: "Error appliying host form",
             success: false,
-            error
+            error:error
+           
         })
+        
     }
 })
 
@@ -55,7 +77,7 @@ const ApplicationStatus = asyncHandler(async (req, res) => {
 
 })
 
-
+       
 
 
 

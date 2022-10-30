@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { Grid, AppBar, Toolbar, Typography, Tab, Tabs, Button, useMediaQuery, useTheme } from "@mui/material"
 import CarRentalIcon from '@mui/icons-material/CarRental'
 import DrawerComp from "../components/DrawerComp"
@@ -8,15 +8,29 @@ import { Link, useLocation, useNavigate, Navigate } from "react-router-dom"
 import { logout, reset } from "../redux/features/Auth/authSlice"
 
 function NavBar() {
-  const PAGES = ["Your Bookings", "About", "Contact Us",]
+  const PAGES = [
+    
+    {
+      name: "Become A Host",
+      path: '/becomeHost',
+    },
+    {
+      name: "My Account",
+      path: "/userProfile",
+    }
+  ]
+
   const { user } =
-  useSelector(
-    (state) => state.auth
-  )
+    useSelector(
+      (state) => state.auth
+    )
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [value, setValue] = useState()
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const theme = useTheme()
   console.log(theme)
   const isMatch = useMediaQuery(theme.breakpoints.down('md'))
@@ -42,10 +56,10 @@ function NavBar() {
 
   return (
     <>
-    <AppBar sx={{ background: "black" }}>
+      <AppBar sx={{ background: "black" }}>
         <Toolbar>
 
-          <CarRentalIcon  sx={{ width: "50px", height: "50px" }} onClick={()=>navigate("/")}/>
+          <CarRentalIcon sx={{ width: "50px", height: "50px" }} onClick={() => navigate("/")} />
           {isMatch ? (
             <>
               <Typography>
@@ -57,19 +71,24 @@ function NavBar() {
 
             <>
               <Typography>Rent-UP</Typography>
-              
-              <Tabs sx={{ml:"600px"}}textColor="inherit" value={value}
-                onChange={(e, value) => setValue(value)}
-                indicatorColor="secondary" >
+
+              <Tabs sx={{ ml: "600px", color: "#fff" }} textColor="secondary" value={value}
+                onChange={(e, value) => handleChange(value)}
+                indicatorColor="secondary"
+    
+                aria-label="secondary tabs example"
+              >
                 {
-                  PAGES.map((page, index) => (
-                    <Tab sx={{}} key={index} label={page} />
+                  PAGES?.map((page, index) => (
+                    <>
+                      <Tab sx={{}} label={page.name} onClick={() => navigate(page.path)} />
+                    </>
                   ))
                 }
               </Tabs>
               {user ? (
                 <>
-                  < Button sx={{color:"#fae8e8"}}>Become a host</Button>
+
                   <Button sx={{ marginLeft: 'auto' }} variant="contained" onClick={toLogin} >{user.name}</Button>
                   <Button sx={{ marginLeft: "20px" }} variant="contained" onClick={onLogout}>Logout</Button>
                 </>

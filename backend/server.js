@@ -24,7 +24,9 @@ app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/application', require('./routes/applicationRoute'))
 app.use('/api/admin',require('./routes/adminRoutes'))
 app.use('/api/host',require("./routes/hostRoutes"))
-
+app.get('/api/user',((req,res)=>{
+   res.json()
+}))
 app.use(errorHandler)
 
 app.listen(port,() => console.log(`server started at port ${port}`))
